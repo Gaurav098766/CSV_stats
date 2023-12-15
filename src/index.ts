@@ -1,13 +1,20 @@
-import { CsvFileReader } from "./CsvFileReader";
+import { MatchReader } from "./MatchReader";
 import { MatchResult } from "./matchResult";
+import { CsvFileReader } from "./CsvFileReader";
 
-const reader = new CsvFileReader('football.csv')
-reader.read();
+// create am object that statisfies 'DataReader' interface
+const csvFileReader = new CsvFileReader('football.csv');
 
-const dateOfFirstMatch = reader.data[0][0]
+
+// Create an instance of MatchReader and pass in something satisfying
+// the 'DataReader' interface
+const matchReader = new MatchReader(csvFileReader);
+matchReader.load();
+// now we can reference anyhtime matchreader.matches
+
 
 let manUnitedWins = 0;
-for(let match of reader.data){
+for(let match of matchReader.matches){
     if(match[1] === 'Man United' && match[5] === MatchResult.HomeWin){
         manUnitedWins++;
     }
